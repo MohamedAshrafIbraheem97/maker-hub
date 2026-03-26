@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
-@import 'tailwindcss-primeui';
-
-/* Define the layer order so PrimeNG doesn't override your utility classes */
-@layer theme, base, primeng, tailwind-utilities;
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark --prefersdark,
+    cupcake;
+}

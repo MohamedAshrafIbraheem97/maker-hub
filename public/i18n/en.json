@@ -1,0 +1,18 @@
+{
+  "login": {
+    "title": "Welcome Back",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login"
+  },
+  "errors": {
+    "email": {
+      "required": "Email is required.",
+      "email": "The email format is invalid."
+    },
+    "password": {
+      "required": "Password is required.",
+      "minLength": "Password must be at least {{ requiredLength }} characters."
+    }
+  }
+}

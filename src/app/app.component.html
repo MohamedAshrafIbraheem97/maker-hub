@@ -1,0 +1,15 @@
+<main [attr.data-theme]="themeService.theme" class="h-full">
+  <div class="fixed inset-e-3 top-3 flex flex-col gap-2 z-50">
+    <!-- Language Toggle -->
+    <button class="btn btn-ghost btn-circle" (click)="toggleLanguage()">
+      <fa-icon [icon]="langIcon" class="text-lg" />
+    </button>
+
+    <!-- Theme Toggle -->
+    <button class="btn btn-ghost btn-circle" (click)="toggleTheme()">
+      <fa-icon class="text-lg" [icon]="themeIcon()" />
+    </button>
+  </div>
+
+  <router-outlet></router-outlet>
+</main>

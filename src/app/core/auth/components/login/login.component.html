@@ -1,0 +1,87 @@
+<div class="min-h-screen flex items-center justify-center px-4 bg-base-200">
+  <div class="w-full max-w-md">
+    <!-- Card -->
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body space-y-5">
+        <!-- Header -->
+        <div class="text-center">
+          <h2 class="text-2xl font-bold">
+            {{ 'login.title' | transloco }}
+          </h2>
+          <p class="text-sm opacity-70">Welcome back 👋</p>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-4" (submit)="onSubmit($event)">
+          <!-- Email -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">{{ 'login.email' | transloco }}</span>
+            </label>
+
+            <input type="email" class="input input-bordered w-full" [formField]="loginForm.email" />
+
+            @if (loginForm.email().touched() && loginForm.email().errors()) {
+              @for (error of loginForm.email().errors(); track error) {
+                <span class="text-error text-sm mt-1">
+                  {{ error.message | transloco }}
+                </span>
+              }
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">{{ 'login.password' | transloco }}</span>
+            </label>
+
+            <div class="relative">
+              <input
+                [type]="showPassword() ? 'text' : 'password'"
+                class="input input-bordered w-full pr-10"
+                [formField]="loginForm.password"
+                [ngClass]="loginForm.password().errors() ? 'validator' : ''"
+              />
+
+              <!-- Toggle icon -->
+              <button
+                type="button"
+                class="absolute right-3 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100"
+                (click)="showPassword.set(!showPassword())"
+              >
+                <i class="pi" [class]="showPassword() ? 'pi-eye-slash' : 'pi-eye'"></i>
+              </button>
+            </div>
+
+            @if (loginForm.password().touched() && loginForm.password().errors()) {
+              @for (error of loginForm.password().errors(); track error) {
+                <span class="text-error text-sm mt-1">
+                  {{ error.message | transloco: { requiredLength: 6 } }}
+                </span>
+              }
+            }
+          </div>
+
+          <!-- Submit -->
+          <button class="btn btn-primary w-full" type="submit">
+            {{ 'login.submit' | transloco }}
+          </button>
+
+          <!-- Divider -->
+          <div class="divider">OR</div>
+
+          <!-- Google Login -->
+          <button type="button" class="btn btn-outline w-full flex items-center gap-2">
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              class="w-5 h-5"
+              alt="google"
+            />
+            Continue with Google
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
