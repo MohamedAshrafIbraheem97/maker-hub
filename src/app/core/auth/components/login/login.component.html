@@ -1,87 +1,94 @@
-<div class="min-h-screen flex items-center justify-center px-4 bg-base-200">
-  <div class="w-full max-w-md">
-    <!-- Card -->
-    <div class="card bg-base-100 shadow-xl">
-      <div class="card-body space-y-5">
+<div
+  class="min-h-screen flex items-center justify-center px-4 bg-[var(--mat-sys-surface-container)]"
+>
+  <div class="w-full max-w-sm">
+    <mat-card>
+      <div class="px-8 pt-8 pb-6">
         <!-- Header -->
-        <div class="text-center">
-          <h2 class="text-2xl font-bold">
-            {{ 'login.title' | transloco }}
-          </h2>
-          <p class="text-sm opacity-70">Welcome back 👋</p>
+        <div class="mb-2 flex items-center gap-4">
+          <div
+            class="w-11 h-11 rounded-2xl bg-[var(--mat-sys-primary-container)] flex items-center justify-center"
+          >
+            <mat-icon class="text-[var(--mat-sys-on-primary-container)]">lock_open</mat-icon>
+          </div>
+          <h1 class="text-2xl font-bold tracking-tight">{{ 'login.title' | transloco }} 👋</h1>
         </div>
 
         <!-- Form -->
-        <form class="space-y-4" (submit)="onSubmit($event)">
+        <form (submit)="onSubmit($event)">
           <!-- Email -->
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">{{ 'login.email' | transloco }}</span>
-            </label>
-
-            <input type="email" class="input input-bordered w-full" [formField]="loginForm.email" />
-
-            @if (loginForm.email().touched() && loginForm.email().errors()) {
-              @for (error of loginForm.email().errors(); track error) {
-                <span class="text-error text-sm mt-1">
-                  {{ error.message | transloco }}
-                </span>
-              }
+          <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+            <mat-label>{{ 'login.email' | transloco }}</mat-label>
+            <input
+              matInput
+              type="email"
+              [formField]="loginForm.email"
+              [errorStateMatcher]="emailMatcher"
+            />
+          </mat-form-field>
+          @if (loginForm.email().touched() && loginForm.email().errors()) {
+            @for (error of loginForm.email().errors(); track error) {
+              <mat-error>{{ error.message | transloco }}</mat-error>
             }
-          </div>
+          }
 
           <!-- Password -->
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">{{ 'login.password' | transloco }}</span>
-            </label>
-
-            <div class="relative">
-              <input
-                [type]="showPassword() ? 'text' : 'password'"
-                class="input input-bordered w-full pr-10"
-                [formField]="loginForm.password"
-                [ngClass]="loginForm.password().errors() ? 'validator' : ''"
-              />
-
-              <!-- Toggle icon -->
-              <button
-                type="button"
-                class="absolute right-3 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100"
-                (click)="showPassword.set(!showPassword())"
-              >
-                <i class="pi" [class]="showPassword() ? 'pi-eye-slash' : 'pi-eye'"></i>
-              </button>
-            </div>
-
-            @if (loginForm.password().touched() && loginForm.password().errors()) {
-              @for (error of loginForm.password().errors(); track error) {
-                <span class="text-error text-sm mt-1">
-                  {{ error.message | transloco: { requiredLength: 6 } }}
-                </span>
-              }
+          <mat-form-field appearance="outline" class="w-full mt-4" subscriptSizing="dynamic">
+            <mat-label>{{ 'login.password' | transloco }}</mat-label>
+            <input
+              matInput
+              [type]="showPassword() ? 'text' : 'password'"
+              [formField]="loginForm.password"
+              [errorStateMatcher]="passwordMatcher"
+            />
+            <button
+              matSuffix
+              mat-icon-button
+              type="button"
+              (click)="showPassword.set(!showPassword())"
+            >
+              <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          @if (loginForm.password().touched() && loginForm.password().errors()) {
+            @for (error of loginForm.password().errors(); track error) {
+              <mat-error>{{ error.message | transloco: { requiredLength: 6 } }}</mat-error>
             }
-          </div>
+          }
 
           <!-- Submit -->
-          <button class="btn btn-primary w-full" type="submit">
+          <button mat-flat-button class="w-full mt-6" type="submit">
             {{ 'login.submit' | transloco }}
           </button>
 
           <!-- Divider -->
-          <div class="divider">OR</div>
+          <div class="flex items-center gap-3 my-5">
+            <mat-divider class="flex-1" />
+            <span class="text-xs text-[var(--mat-sys-on-surface-variant)]">OR</span>
+            <mat-divider class="flex-1" />
+          </div>
 
-          <!-- Google Login -->
-          <button type="button" class="btn btn-outline w-full flex items-center gap-2">
+          <!-- Google -->
+          <button type="button" mat-stroked-button class="w-full gap-2">
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
-              class="w-5 h-5"
+              class="w-4 h-4"
               alt="google"
             />
             Continue with Google
           </button>
+
+          <!-- Register link -->
+          <div class="flex items-center justify-center gap-1 mt-5">
+            <span class="text-sm text-[var(--mat-sys-on-surface-variant)]">{{
+              'login.noAccount' | transloco
+            }}</span>
+            <button type="button" mat-button routerLink="../register">
+              {{ 'login.createAccount' | transloco }}
+            </button>
+          </div>
         </form>
       </div>
-    </div>
+    </mat-card>
   </div>
 </div>

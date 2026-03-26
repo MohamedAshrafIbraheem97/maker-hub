@@ -1,38 +1,35 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
-export type theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  private _theme = signal<theme>('light');
-  // BehaviorSubject to hold and manage the current theme
+  private _theme = signal<Theme>('light');
 
   constructor() {
-    const savedTheme = (localStorage.getItem('theme') as theme) || 'light';
-    this._theme.set(savedTheme); // Set initial value based on localStorage
+    const savedTheme = (localStorage.getItem('theme') as Theme) || 'light';
+    this._theme.set(savedTheme);
+    this.applyTheme(savedTheme);
   }
 
-  /**
-   * @description get the selected theme as a signal
-   */
-  get theme(): string {
+  get theme(): Theme {
     return this._theme();
   }
 
-  /**
-   * @description toggle the theme to the selected theme
-   * @returns selected theme
-   */
-  public toggleTheme() {
-    const newTheme = this._theme() === 'light' ? 'dark' : 'light';
-    this._theme.set(newTheme); // Update the signal value
-    localStorage.setItem('theme', newTheme); // Save the theme in localStorage
+  isDarkMode(): boolean {
+    return this._theme() === 'dark';
   }
 
-  isDarkMode() {
-    return this._theme() === 'dark';
+  toggleTheme(): void {
+    const newTheme: Theme = this._theme() === 'light' ? 'dark' : 'light';
+    this._theme.set(newTheme);
+    localStorage.setItem('theme', newTheme);
+    this.applyTheme(newTheme);
+  }
+
+  private applyTheme(theme: Theme): void {
+    document.body.classList.toggle('dark-theme', theme === 'dark');
   }
 }

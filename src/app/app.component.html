@@ -1,13 +1,10 @@
-<main [attr.data-theme]="themeService.theme" class="h-full">
+<main class="h-full">
   <div class="fixed inset-e-3 top-3 flex flex-col gap-2 z-50">
-    <!-- Language Toggle -->
-    <button class="btn btn-ghost btn-circle" (click)="toggleLanguage()">
-      <fa-icon [icon]="langIcon" class="text-lg" />
+    <button mat-icon-button (click)="toggleLanguage()" aria-label="Toggle language">
+      <fa-icon [icon]="langIcon" />
     </button>
-
-    <!-- Theme Toggle -->
-    <button class="btn btn-ghost btn-circle" (click)="toggleTheme()">
-      <fa-icon class="text-lg" [icon]="themeIcon()" />
+    <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle theme">
+      <fa-icon [icon]="themeIcon()" />
     </button>
   </div>
 

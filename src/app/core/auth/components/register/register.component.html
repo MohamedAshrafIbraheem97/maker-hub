@@ -1,38 +1,136 @@
-<div class="flex justify-center items-center min-h-screen">
-  <div class="w-full max-w-md">
-    <form class="space-y-4">
-      <div>
-        <label for="login-email" class="block mb-1 font-medium">Email</label>
-        <input
-          pInputText
-          id="login-email"
-          type="email"
-          class="w-full"
-          placeholder="Enter your email"
-        />
-      </div>
-      <div>
-        <label for="login-password" class="block mb-1 font-medium">Password</label>
-        <input
-          pInputText
-          id="login-password"
-          type="password"
-          class="w-full"
-          placeholder="Enter your password"
-        />
-      </div>
+<div
+  class="min-h-screen flex items-center justify-center px-4 bg-[var(--mat-sys-surface-container)]"
+>
+  <div class="w-full max-w-sm">
+    <mat-card>
+      <div class="px-8 pt-8 pb-6">
+        <!-- Header -->
+        <div class="mb-2 flex items-center gap-4">
+          <div
+            class="w-11 h-11 rounded-2xl bg-[var(--mat-sys-primary-container)] flex items-center justify-center"
+          >
+            <mat-icon class="text-[var(--mat-sys-on-primary-container)]">person_add</mat-icon>
+          </div>
+          <h1 class="text-2xl font-bold tracking-tight">{{ 'register.title' | transloco }} 🚀</h1>
+        </div>
 
-      <div>
-        <label for="register-confirm" class="block mb-1 font-medium">Confirm Password</label>
-        <input
-          pInputText
-          id="register-confirm"
-          type="password"
-          class="w-full"
-          placeholder="Confirm your password"
-        />
+        <!-- Form -->
+        <form (submit)="onSubmit($event)">
+          <!-- Name -->
+          <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+            <mat-label>{{ 'register.name' | transloco }}</mat-label>
+            <input
+              matInput
+              type="text"
+              [formField]="registerForm.name"
+              [errorStateMatcher]="nameMatcher"
+            />
+          </mat-form-field>
+          @if (registerForm.name().touched() && registerForm.name().errors()) {
+            @for (error of registerForm.name().errors(); track error) {
+              <mat-error>{{ error.message | transloco }}</mat-error>
+            }
+          }
+
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="w-full mt-4" subscriptSizing="dynamic">
+            <mat-label>{{ 'register.email' | transloco }}</mat-label>
+            <input
+              matInput
+              type="email"
+              [formField]="registerForm.email"
+              [errorStateMatcher]="emailMatcher"
+            />
+          </mat-form-field>
+          @if (registerForm.email().touched() && registerForm.email().errors()) {
+            @for (error of registerForm.email().errors(); track error) {
+              <mat-error>{{ error.message | transloco }}</mat-error>
+            }
+          }
+
+          <!-- Password -->
+          <mat-form-field appearance="outline" class="w-full mt-4" subscriptSizing="dynamic">
+            <mat-label>{{ 'register.password' | transloco }}</mat-label>
+            <input
+              matInput
+              [type]="showPassword() ? 'text' : 'password'"
+              [formField]="registerForm.password"
+              [errorStateMatcher]="passwordMatcher"
+            />
+            <button
+              matSuffix
+              mat-icon-button
+              type="button"
+              (click)="showPassword.set(!showPassword())"
+            >
+              <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          @if (registerForm.password().touched() && registerForm.password().errors()) {
+            @for (error of registerForm.password().errors(); track error) {
+              <mat-error>{{ error.message | transloco }}</mat-error>
+            }
+          }
+
+          <!-- Confirm Password -->
+          <mat-form-field appearance="outline" class="w-full mt-4" subscriptSizing="dynamic">
+            <mat-label>{{ 'register.confirmPassword' | transloco }}</mat-label>
+            <input
+              matInput
+              type="password"
+              [formField]="registerForm.confirmPassword"
+              [errorStateMatcher]="confirmPasswordMatcher"
+            />
+          </mat-form-field>
+          @if (
+            registerForm.confirmPassword().touched() && registerForm.confirmPassword().errors()
+          ) {
+            @for (error of registerForm.confirmPassword().errors(); track error) {
+              <mat-error>{{ error.message | transloco }}</mat-error>
+            }
+          }
+
+          <!-- Submit -->
+          <button
+            mat-flat-button
+            class="w-full mt-6"
+            type="submit"
+            [disabled]="registerForm().invalid() || registerForm().pending()"
+          >
+            @if (registerForm().pending()) {
+              <mat-spinner diameter="18" class="inline-block mr-2" />
+            }
+            {{ 'register.submit' | transloco }}
+          </button>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-3 my-5">
+            <mat-divider class="flex-1" />
+            <span class="text-xs text-[var(--mat-sys-on-surface-variant)]">OR</span>
+            <mat-divider class="flex-1" />
+          </div>
+
+          <!-- Google -->
+          <button type="button" mat-stroked-button class="w-full gap-2">
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              class="w-4 h-4"
+              alt="google"
+            />
+            Continue with Google
+          </button>
+
+          <!-- Login link -->
+          <div class="flex items-center justify-center gap-1 mt-5">
+            <span class="text-sm text-[var(--mat-sys-on-surface-variant)]">{{
+              'register.haveAccount' | transloco
+            }}</span>
+            <button type="button" mat-button routerLink="../login">
+              {{ 'register.login' | transloco }}
+            </button>
+          </div>
+        </form>
       </div>
-      <button pButton type="submit" label="Login" class="w-full"></button>
-    </form>
+    </mat-card>
   </div>
 </div>

@@ -3,16 +3,36 @@
     "title": "Welcome Back",
     "email": "Email",
     "password": "Password",
-    "submit": "Login"
+    "submit": "Login",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one"
+  },
+
+  "register": {
+    "title": "Create an Account",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Register",
+    "haveAccount": "Already have an account?",
+    "login": "Login"
   },
   "errors": {
+    "name": {
+      "required": "Name is required."
+    },
     "email": {
       "required": "Email is required.",
       "email": "The email format is invalid."
     },
     "password": {
       "required": "Password is required.",
-      "minLength": "Password must be at least {{ requiredLength }} characters."
+      "minLength": "Password must be at least {{ requiredLength }} characters.",
+      "confirmPassword": {
+        "required": "Confirm Password is required.",
+        "match": "Passwords do not match."
+      }
     }
   }
 }
